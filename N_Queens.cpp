@@ -1,9 +1,7 @@
-bool isValid(const vector<string>& v, int row, int pos, int A)
-// index of where the queen was placed
+bool isValid(const vector<string>& v, int row, int pos, int A) // pos is essentially a column 
 {
+	// check above the Queen
 	int i = 0;
-
-	// check above
 	while (i < row)
 	{
 		if (v[i][pos] == 'Q')
@@ -36,7 +34,7 @@ bool isValid(const vector<string>& v, int row, int pos, int A)
 	return true;
 }
 
-void helper(int A, vector<string>& cur, int row, vector<vector<string>>& result)
+void generateSolutions(int A, vector<string>& cur, int row, vector<vector<string>>& result)
 {
 	if (row == A)// we have just placed last Q, and it is valid=>it should be a solution.
 	{
@@ -50,7 +48,7 @@ void helper(int A, vector<string>& cur, int row, vector<vector<string>>& result)
 		if (isValid(cur, row, pos, A))
 		{
 			// it is all valid so far=>move on to the next row
-			helper(A, cur, row + 1, result);
+			generateSolutions(A, cur, row + 1, result);
 		}
 		cur[row][pos] = '.';
 	}
@@ -81,8 +79,7 @@ vector<vector<string> > Solution::solveNQueens(int A)
 	//variable for final result
 	vector<vector<string>> result;
 
-	helper(A, board, 0, result);
-
+	generateSolutions(A, board, 0, result);
 	return result;
 }
 
